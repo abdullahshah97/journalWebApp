@@ -1,0 +1,12 @@
+{% extends "entries/base.html" %}
+{% block content %}
+ <p>Entry Title</p>
+ <ul>
+     {% for title in titles %}
+         <li>{{ title }}</li>
+     {% empty %}
+         <li>No topics have been added yet.</li>
+     {% endfor %}
+ </ul>
+
+{% endblock content %}
