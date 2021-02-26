@@ -3,7 +3,9 @@
  <p>Entry Title</p>
  <ul>
      {% for title in titles %}
-         <li>{{ title }}</li>
+         <li>
+            <a href="{% url 'entries:title' title.id %}">{{ title }}</a>
+         </li>
      {% empty %}
          <li>No topics have been added yet.</li>
      {% endfor %}
