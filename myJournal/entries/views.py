@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from .models import EntryTitle
+from .models import EntryTitle, Entry
 from .forms import EntryTitleForm, EntryForm
 
 
@@ -58,3 +58,17 @@ def new_entry(request, title_id):
 
     context = {'title': title, 'form': form}
     return render(request, 'entries/new_entry.html', context)
+
+def edit_entry(request, entry_id):
+    entry = Entry.objects.get(id=entry_id)
+    title = entry.title
+
+    if request.method != 'POST':
+        form = EntryForm(instance=entry)
+    else:
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('entries:title', args=[title.id]))
+    context = {'entry': entry, 'title': title, 'form': form}
+    return render(request, 'entries/edit_entry.html', context)
