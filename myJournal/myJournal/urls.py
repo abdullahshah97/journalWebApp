@@ -20,4 +20,5 @@ from importlib_resources import path
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('entries.urls', namespace='entries')),
+    url(r'^users/', include('users.urls', namespace='users')),
 ]
