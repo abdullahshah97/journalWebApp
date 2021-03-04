@@ -4,10 +4,11 @@ from .models import EntryTitle, Entry
 
 
 class EntryTitleForm(forms.ModelForm):
+
     class Meta:
         model = EntryTitle
-        fields = ['text']
-        labels = {'text': ''}
+        fields = ['text', 'public']
+        labels = {'text': '', 'public': 'Post Publicly'}
 
 
 class EntryForm(forms.ModelForm):

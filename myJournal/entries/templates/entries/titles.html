@@ -1,15 +1,24 @@
 {% extends "entries/base.html" %}
+{% block header %}
+<h2>Topics</h2>
+{% endblock header %}
+
 {% block content %}
- <p>Entry Title</p>
- <ul>
-     {% for title in titles %}
-         <li>
+<ul>
+    {% for title in titles %}
+    <li>
+        <h3>
             <a href="{% url 'entries:title' title.id %}">{{ title }}</a>
-         </li>
-     {% empty %}
-         <li>No topics have been added yet.</li>
-     {% endfor %}
- </ul>
-<a href="{% url 'entries:new_title' %}">Add title</a>
+        </h3>
+        <form action="{% url 'entries:delete_title' title.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete title">
+        </form>
+    </li>
+    {% empty %}
+    <li>No topics have been added yet.</li>
+    {% endfor %}
+</ul>
+<h4><a href="{% url 'entries:new_title' %}">Add Topic</a></h4>
 
 {% endblock content %}

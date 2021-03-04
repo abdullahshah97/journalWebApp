@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from .models import EntryTitle, Entry
@@ -81,3 +81,43 @@ def edit_entry(request, entry_id):
             return HttpResponseRedirect(reverse('entries:title', args=[title.id]))
     context = {'entry': entry, 'title': title, 'form': form}
     return render(request, 'entries/edit_entry.html', context)
+
+
+@login_required
+def all_posts(request):
+    titles = list(EntryTitle.objects.filter(public=1).order_by('date_added'))
+    count = 0
+    entries= []
+    for title in titles:
+        entries.append(list(Entry.objects.filter(title__text=title)\
+            .values('title__text', 'text', 'date_added', 'title__public', 'title__owner__username')))
+        count += 1
+    context = {'entries': entries}
+    print('\n')
+    print(entries)
+    return render(request, 'entries/all_posts.html', context)
+
+
+@login_required
+def delete_entry(request, entry_id):
+    entry = get_object_or_404(Entry, id=entry_id)
+
+    if request.method == 'POST':
+        entry.delete()
+        return redirect('/titles/')
+    else:
+        return render(request, 'titles.html', {'entry': entry_id})
+
+
+@login_required
+def delete_title(request, title_id):
+    title = get_object_or_404(EntryTitle, id=title_id)
+
+    if request.method == 'POST':
+        if title.owner == request.user:
+            title.delete()
+            return redirect('/titles/')
+        else:
+            return HttpResponse('Unauthorized', status=401)
+    else:
+        return render(request, 'titles.html', {'entry': title_id})

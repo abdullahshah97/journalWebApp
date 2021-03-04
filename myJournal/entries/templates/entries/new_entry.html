@@ -1,12 +1,14 @@
 {% extends "entries/base.html" %}
+{% load bootstrap4 %}
+
 {% block content %}
 <p><a href="{% url 'entries:title' title.id %}">{{ title }}</a></p>
 
 <p>Add a new entry:</p>
 <form action="{% url 'entries:new_entry' title.id %}" method='post'>
     {% csrf_token %}
-    {{ form.as_p }}
-    <button name='submit'>add entry</button>
+    {% bootstrap_form form %}
+    <button name='submit'>Add Entry</button>
 </form>
 
 {% endblock content %}

@@ -1,12 +1,12 @@
 {% extends "entries/base.html" %}
+{% load bootstrap4 %}
 
 {%block content %}
-
-    <p><a href="{% url 'entries:title' title.id %}">{{title}}</a></p>
-    <p>Edit entry:</p>
+    <H4><a href="{% url 'entries:title' title.id %}">{{title}}</a></H4>
+    <p>Edit Entry:</p>
     <form action="{% url 'entries:edit_entry' entry.id %}" method='post'>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit"> save changes </button>
+        {% bootstrap_form form %}
+        <button name="submit"> Save Changes </button>
     </form>
 {% endblock content %}

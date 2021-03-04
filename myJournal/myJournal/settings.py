@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 LOGIN_URL = '/users/login/'
 
 # Settings for django-bootstrap3
-BOOTSTRAP3 = {
+BOOTSTRAP4 = {
  'include_jquery': True,
  }
 
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'entries',
     'users',
     # Third party apps
-    'bootstrap3',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
