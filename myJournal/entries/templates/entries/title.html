@@ -1,38 +1,39 @@
 {% extends 'entries/base.html' %}
+{% load bootstrap4 %}
 {% block header %}
-<h2>{{ title }}</h2>
+<h2><a href="{% url 'entries:titles' %}"> {{ title }}</a></h2>
 {% endblock header %}
 
 {% block content %}
 
-<p>Topic: {{title}}</p>
-
 <p>Entries:</p>
 <ul>
     {% for entry in entries %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3>
+    <div class="card">
+        <div class="card-header">
+            <blockquote class="blockquote text-centre">
                 {{ entry.date_added|date:'M d, Y H:i' }}
-                <small>
-                    <a href="{% url 'entries:edit_entry' entry.id %}">
-                        edit entry</a>
-                </small>
-            </h3>
+            </blockquote>
         </div>
-        <div class="panel-body">
+        <div class = "card-body">
             {{ entry.text|linebreaks }}
-        </div>
-    </div> <!-- panel -->
+            </div>
+        <div class="card-footer">
     <form action="{% url 'entries:delete_entry' entry.id %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="Delete entry">
-</form>
+    <input type="submit" class = "btn btn-outline-danger btn-sm float-right" value="Delete entry">
+    </form>
+            <button type="button" class="btn btn-outline-primary btn-sm float-right mr-2">
+    <a href="{% url 'entries:edit_entry' entry.id %}">Edit Entry</a>
+    </button>
+  </div>
+    </div> <!-- panel -->
+    </br>
     {% empty %}
     There are no entries for this topic yet.
     {% endfor %}
 </ul>
-<p>
-    <a href="{% url 'entries:new_entry' title.id %}">Add a New Entry</a>
-</p>
+<button type="button" class="btn btn-primary float-right">
+    <a style = "color:white;" href="{% url 'entries:new_entry' title.id %}">Add a New Entry</a>
+</button>
 {% endblock content %}

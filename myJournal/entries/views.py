@@ -86,12 +86,9 @@ def edit_entry(request, entry_id):
 @login_required
 def all_posts(request):
     titles = list(EntryTitle.objects.filter(public=1).order_by('date_added'))
-    count = 0
     entries= []
-    for title in titles:
-        entries.append(list(Entry.objects.filter(title__text=title)\
+    entries.append(list(Entry.objects.filter(title__text__in = titles)\
             .values('title__text', 'text', 'date_added', 'title__public', 'title__owner__username')))
-        count += 1
     context = {'entries': entries}
     print('\n')
     print(entries)

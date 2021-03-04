@@ -7,8 +7,7 @@
 
 {% block content %}
 
-<form action="{% url 'entries:new_title' %}" method='post'
- class="form">
+<form action="{% url 'entries:new_title' %}" method='post' class="form">
       {% csrf_token %}
       {% bootstrap_form form %}
       {% buttons %}

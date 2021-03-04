@@ -9,7 +9,7 @@
 {% block content %}
   <h2>
    {% if user.is_authenticated %}
-   Hello, {{ user.username }}.
+   Hello, {{ user.username }}!
    </h2>
     <h3> Start adding your topics <a href=" {% url 'entries:new_title' %}">here</a>  to get started!</h3>
    {% else %}

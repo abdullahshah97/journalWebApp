@@ -6,19 +6,24 @@
 {% block content %}
 <ul>
     {% for title in titles %}
-    <li>
-        <h3>
-            <a href="{% url 'entries:title' title.id %}">{{ title }}</a>
-        </h3>
-        <form action="{% url 'entries:delete_title' title.id %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Delete title">
-        </form>
-    </li>
-    {% empty %}
-    <li>No topics have been added yet.</li>
-    {% endfor %}
+     <div class="card mb-4 border-0">
+        <div class="card-header">
+                <h3>
+                    <a href="{% url 'entries:title' title.id %}">{{ title }}</a>
+                </h3>
+        </div>
+            <form action="{% url 'entries:delete_title' title.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class = "btn btn-outline-danger btn-sm float-right" value="Delete Topic">
+            </form>
+     </div>
+            </br>
+        {% empty %}
+        <blockquote> No topics have been added yet.</blockquote>
+        {% endfor %}
 </ul>
-<h4><a href="{% url 'entries:new_title' %}">Add Topic</a></h4>
 
+    <button type="button" class="btn btn-primary float-right">
+        <a style = "color:white;" href="{% url 'entries:new_title' %}">Add Topic</a>
+    </button>
 {% endblock content %}
