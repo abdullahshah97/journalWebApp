@@ -1,0 +1,26 @@
+{% extends "entries/base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<p xmlns="http://www.w3.org/1999/html">Entries</p>
+     {% for list in entries %}
+        {% for dict in list %}
+         <div class="card">
+              <div class="card-header">
+                  <h4 >{{ dict.title__text }}</h4> <blockquote class="blockquote text-right">{{dict.date_added}}</blockquote>
+                  </div>
+
+         <div class = "card-body">
+             <p> {{ dict.text }}</p>
+             </div>
+         <div class = "card-footer text-right">
+             <p>by<b> {{dict.title__owner__username}}</b> </p>
+         </div>
+         </div>
+</br>
+     {% empty %}
+         <li>No public topics have been added yet.</li>
+     {% endfor %}
+     {% endfor %}
+ </ul>
+
+{% endblock content %}
